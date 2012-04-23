@@ -2,5 +2,10 @@
 <resources>
 
     <string name="app_name">NFL Trade Calc</string>
+    <string name="default_footer">Total: 0 pts</string>
+    <string name="static_round">Round </string>
+    <string name="static_sub_round">-</string>
+    <string name="static_left_paren">(</string>
+    <string name="static_right_paren">)</string>
 
 </resources>

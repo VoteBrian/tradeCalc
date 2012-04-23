@@ -8,5 +8,30 @@
     <item>Carolina Panthers</item>
     <item>Chicago Bears</item>
     <item>Cincinnati Bengals</item>
+    <item>Cleveland Browns</item>
+    <item>Dallas Cowboys</item>
+    <item>Denver Broncos</item>
+    <item>Detroit Lions</item>
+    <item>Green Bay Packers</item>
+    <item>Houston Texans</item>
+    <item>Indianapolis Colts</item>
+    <item>Jacksonville Jaguars</item>
+    <item>Kansas City Chiefs</item>
+    <item>Miami Dolphins</item>
+    <item>Minnesota Vikings</item>
+    <item>New England Patriots</item>
+    <item>New Orleans Saints</item>
+    <item>New York Giants</item>
+    <item>New York Jets</item>
+    <item>Oakland Raiders</item>
+    <item>Philadelphia Eagles</item>
+    <item>Pittsburg Steelers</item>
+    <item>San Diego Chargers</item>
+    <item>San Francisco 49ers</item>
+    <item>Seattle Seahawks</item>
+    <item>St. Louis Rams</item>
+    <item>Tampa Bay Buckaneers</item>
+    <item>Tennessee Titans</item>
+    <item>Washington Redskins</item>
   </string-array>
 </resources>
