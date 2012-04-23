@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
@@ -21,6 +20,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class TradeActivity extends FragmentActivity {
@@ -50,11 +50,11 @@ public class TradeActivity extends FragmentActivity {
     mTabsAdapter = new TradePagerAdapter(this, mTabHost, mViewPager);
 
     mTabsAdapter.addTab(mTabHost.newTabSpec("teamA").setIndicator("Team A"),
-        CountingFragment.class, null);
+        CountingFragmentA.class, null);
     mTabsAdapter.addTab(mTabHost.newTabSpec("teamB").setIndicator("Team B"),
-        CountingFragment.class, null);
+        CountingFragmentB.class, null);
     mTabsAdapter.addTab(mTabHost.newTabSpec("results").setIndicator("Results"),
-        CountingFragment.class, null);
+        CountingFragmentA.class, null);
 
     if (savedInstanceState != null) {
       mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
@@ -156,42 +156,122 @@ public class TradeActivity extends FragmentActivity {
     }
   }
 
-  //-----CURSOR LOADER LIST FRAGMENT-----//
-  public class CursorLoaderListFragment extends ListFragment {
-    private int mTeam = 1;
 
-    SimpleCursorAdapter mAdapter;
+  //-----COUNTER FRAGMENT A-----//
+  public static class CountingFragmentA extends Fragment {
+    private final int TEAM_IND = 1; // used to indicate ViewPager page.  I'm cheating.
+    int mNum;
     Cursor cursor;
+    int mTeam = 1;
+    View mView;
+    public int defaultColor;
+
+    static CountingFragmentA newInstance(int num) {
+      CountingFragmentA f = new CountingFragmentA();
+
+      Bundle args = new Bundle();
+      args.putInt("num", num);
+      f.setArguments(args);
+
+      return f;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
+      mNum = getArguments() != null ? getArguments().getInt("num") : 1;
+    }
 
-      /*cursor = mDbAdapter.fetchTeamPicks(mTeam);
-      getActivity().startManagingCursor(cursor);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        Bundle savedInstanceState) {
+      mView = inflater.inflate(R.layout.trades_page, container, false);
 
-      String[] from = new String[] {DbAdapter.KEY_PICK};
-      int[] to = new int[] {R.id.row_pick};
+      Spinner s = (Spinner) mView.findViewById(R.id.spinner);
+      ArrayAdapter<CharSequence> sAdapter = ArrayAdapter.createFromResource(mCtx, R.array.teams, android.R.layout.simple_spinner_item);
+      sAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      s.setAdapter(sAdapter);
+      s.setOnItemSelectedListener(
+          new OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+              mTeam = position + 1;
+              populateList(getActivity());
+            }
+
+            public void onNothingSelected(AdapterView<?> parent) {
+              // chill
+            }
+          });
+
+      populateList(getActivity());
+      
+      return mView;
+    }
+
+    public void populateList(FragmentActivity activity) {
+      ListView lv = (ListView) mView.findViewById(R.id.picks_list);
+      cursor = mDbAdapter.fetchTeamPicks(mTeam);
+      activity.startManagingCursor(cursor);
+
+      String[] from = new String[] {
+          DbAdapter.KEY_ROUND,
+          DbAdapter.KEY_SUB_PICK,
+          DbAdapter.KEY_PICK,
+          DbAdapter.KEY_VALUE};
+      int[] to = new int[] {R.id.row_round, R.id.row_sub_pick, R.id.row_pick, R.id.row_value};
 
       SimpleCursorAdapter picks = new SimpleCursorAdapter(
           getActivity().getApplicationContext(),
           R.layout.trade_row,
           cursor,
           from,
-          to);*/
+          to);
+
+      lv.setAdapter(picks);
+      lv.setOnItemClickListener(
+          new android.widget.AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              if(checkSelection(id)) {
+                  //Toast.makeText(getActivity(), "TRUE " + id, Toast.LENGTH_SHORT).show();
+                  removeSelection(id, view);
+              } else {
+                  //Toast.makeText(getActivity(), "FALSE " + id, Toast.LENGTH_SHORT).show();
+                  makeSelection(id, view);
+              }
+            }
+          });
+    }
+
+    private boolean checkSelection(long id) {
+      return mDbAdapter.checkSelection(1, id);
+    }
+
+    private void makeSelection(long id, View view) {
+      mDbAdapter.makeSelection(1, id);
+      view.setBackgroundColor(0xFF33B5E5);
+      TextView v1 = (TextView) view.findViewById(R.id.static_round);
+      v1.setTextColor(0xFFF2F2F2);
+    }
+
+    private void removeSelection(long id, View view) {
+      mDbAdapter.removeSelection(1, id);
+      view.setBackgroundColor(0xFFF2F2F2);
+      TextView v1 = (TextView) view.findViewById(R.id.static_round);
+      v1.setTextColor(0xFF33B5E5);
     }
   }
+  
 
-
-  //-----COUNTER FRAGMENT-----//
-  public static class CountingFragment extends Fragment {
+  //-----COUNTER FRAGMENT B-----//
+  public static class CountingFragmentB extends Fragment {
     int mNum;
     Cursor cursor;
     int mTeam = 1;
     View mView;
 
-    static CountingFragment newInstance(int num) {
-      CountingFragment f = new CountingFragment();
+    static CountingFragmentB newInstance(int num) {
+      CountingFragmentB f = new CountingFragmentB();
 
       Bundle args = new Bundle();
       args.putInt("num", num);
@@ -257,7 +337,7 @@ public class TradeActivity extends FragmentActivity {
           new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              CharSequence text = "Fragment " + mNum;
+              CharSequence text = "Fragment " + 2;
               Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
               //parent.setSelected(true);
               view.setBackgroundColor(0xFF33B5E5);
@@ -265,4 +345,5 @@ public class TradeActivity extends FragmentActivity {
           });
     }
   }
+
 }

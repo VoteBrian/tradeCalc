@@ -68,7 +68,7 @@ public class DbAdapter {
 
       try {
         String fullPath = DB_PATH + DB_NAME;
-        check = SQLiteDatabase.openDatabase(fullPath, null, SQLiteDatabase.OPEN_READONLY);
+        check = SQLiteDatabase.openDatabase(fullPath, null, SQLiteDatabase.OPEN_READWRITE);
       } catch (SQLiteException e)  {
         // database does not exist
       }
@@ -101,7 +101,7 @@ public class DbAdapter {
 
     public void openDatabase() throws SQLException {
       String fullPath = DB_PATH + DB_NAME;
-      mDb = SQLiteDatabase.openDatabase(fullPath, null, SQLiteDatabase.OPEN_READONLY);
+      mDb = SQLiteDatabase.openDatabase(fullPath, null, SQLiteDatabase.OPEN_READWRITE);
     }
 
     @Override
@@ -171,12 +171,6 @@ public class DbAdapter {
     return mCursor;
   }
 
-/*
-  public Cursor fetchTeams() {
-    return mDb.query(DATABASE_TABLE, new String[] {KEY_PICK, KEY_TEAM}, null, null, null, null, null);
-  }
-*/
-
   public long createPick(int round, int sub_pick, int pick, double score, int team) {
     ContentValues pickValues = new ContentValues();
 
@@ -229,5 +223,59 @@ public class DbAdapter {
           null);
     }
     return mCursor;
+  }
+
+  public boolean checkSelection(int page, long sel) {
+    if(page == 1) {
+      Cursor mCursor = mDb.query(
+          true,
+          DB_TABLE_PICKS,
+          new String[] {KEY_ROW_ID, KEY_SEL_A},
+          KEY_PICK + "=" + sel,
+          null,
+          null,
+          null,
+          null,
+          null);
+      mCursor.moveToFirst();
+      int columnIndex = mCursor.getColumnIndex(KEY_SEL_A);
+      return mCursor.getInt(columnIndex) > 0 ? true: false;
+    } else {
+      Cursor mCursor = mDb.query(
+          true,
+          DB_TABLE_PICKS,
+          new String[] {KEY_ROW_ID, KEY_SEL_B},
+          KEY_PICK + "=" + sel,
+          null,
+          null,
+          null,
+          null,
+          null);
+      mCursor.moveToFirst();
+      int columnIndex = mCursor.getColumnIndex(KEY_SEL_B);
+      return mCursor.getInt(columnIndex) > 0 ? true: false;
+    }
+  }
+
+  public void makeSelection(int page, long sel) {
+    String sql;
+    if(page == 1) {
+      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_A + "= '1' WHERE " + KEY_PICK + " = " + sel;
+    } else {
+      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_B + "= '1' WHERE " + KEY_PICK + " = " + sel;
+    }
+
+    mDb.execSQL(sql);
+  }
+
+  public void removeSelection(int page, long sel) {
+    String sql;
+    if(page == 1) {
+      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_A + "= '0' WHERE " + KEY_PICK + " = " + sel;
+    } else {
+      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_B + "= 0 WHERE " + KEY_PICK + " = " + sel;
+    }
+
+    mDb.execSQL(sql);
   }
 }
