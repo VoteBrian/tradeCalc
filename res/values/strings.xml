@@ -7,5 +7,8 @@
     <string name="static_sub_round">-</string>
     <string name="static_left_paren">(</string>
     <string name="static_right_paren">)</string>
+    <string name="static_pts">pts</string>
+    <string name="static_total">Total: </string>
+    <string name="static_for">for</string>
 
 </resources>

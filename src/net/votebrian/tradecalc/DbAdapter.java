@@ -158,7 +158,7 @@ public class DbAdapter {
     Cursor mCursor = mDb.query(
         true,
         DB_TABLE_PICKS,
-        new String[] {KEY_ROW_ID, KEY_PICK, KEY_ROUND, KEY_SUB_PICK, KEY_VALUE, KEY_TEAM},
+        new String[] {KEY_ROW_ID, KEY_PICK, KEY_ROUND, KEY_SUB_PICK, KEY_VALUE, KEY_TEAM, KEY_SEL_A, KEY_SEL_B},
         KEY_TEAM + "=" + team,
         null,
         null,
@@ -273,7 +273,18 @@ public class DbAdapter {
     if(page == 1) {
       sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_A + "= '0' WHERE " + KEY_PICK + " = " + sel;
     } else {
-      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_B + "= 0 WHERE " + KEY_PICK + " = " + sel;
+      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_B + "= '0' WHERE " + KEY_PICK + " = " + sel;
+    }
+
+    mDb.execSQL(sql);
+  }
+
+  public void resetSelections(int page) {
+    String sql;
+    if(page == 1) {
+      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_A + "= 0";
+    } else {
+      sql = "UPDATE " + DB_TABLE_PICKS + " SET " + KEY_SEL_B + "= 0";
     }
 
     mDb.execSQL(sql);

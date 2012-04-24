@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="8dip"
-    android:paddingRight="8dip" >
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="#FF33B5E5" >
 
   <TextView
       android:id="@+id/static_round"
@@ -13,6 +14,7 @@
       android:layout_alignParentLeft="true"
       android:text="@string/static_round"
       android:textSize="24dip"
+      android:textColorHighlight="#FFF3F3F3"
       android:layout_alignBottom="@id/static_round" />
 
   <TextView
@@ -71,7 +73,8 @@
       android:id="@+id/row_value"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_alignParentRight="true"
       android:textSize="24dip"
-      android:layout_alignParentRight="true" />
+      android:layout_alignBottom="@id/static_round" />
 
 </RelativeLayout>

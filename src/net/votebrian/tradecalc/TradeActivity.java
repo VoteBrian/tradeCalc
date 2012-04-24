@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TradeActivity extends FragmentActivity {
 
@@ -29,9 +27,9 @@ public class TradeActivity extends FragmentActivity {
   private ViewPager mViewPager;
   private TabHost mTabHost;
 
-  private static DbAdapter mDbAdapter;
-
   private static Context mCtx;
+
+  static DbAdapter mDbAdapter;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,7 @@ public class TradeActivity extends FragmentActivity {
     setContentView(R.layout.main);
     mCtx = this;
 
-    mDbAdapter = new DbAdapter(this);
+    mDbAdapter = new DbAdapter(mCtx);
     mDbAdapter.open();
 
     mTabHost = (TabHost) findViewById(android.R.id.tabhost);
@@ -50,15 +48,20 @@ public class TradeActivity extends FragmentActivity {
     mTabsAdapter = new TradePagerAdapter(this, mTabHost, mViewPager);
 
     mTabsAdapter.addTab(mTabHost.newTabSpec("teamA").setIndicator("Team A"),
-        CountingFragmentA.class, null);
+        PageFragmentA.class, null);
     mTabsAdapter.addTab(mTabHost.newTabSpec("teamB").setIndicator("Team B"),
-        CountingFragmentB.class, null);
-    mTabsAdapter.addTab(mTabHost.newTabSpec("results").setIndicator("Results"),
-        CountingFragmentA.class, null);
+        PageFragmentB.class, null);
 
     if (savedInstanceState != null) {
       mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
     }
+  }
+
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    mDbAdapter.close();
   }
 
 
@@ -157,17 +160,18 @@ public class TradeActivity extends FragmentActivity {
   }
 
 
-  //-----COUNTER FRAGMENT A-----//
-  public static class CountingFragmentA extends Fragment {
-    private final int TEAM_IND = 1; // used to indicate ViewPager page.  I'm cheating.
+  //-----PAGE FRAGMENT A-----//
+  public static class PageFragmentA extends Fragment {
+    private final int PAGE_IND = 1; // used to indicate ViewPager page.  I'm cheating.
     int mNum;
     Cursor cursor;
     int mTeam = 1;
     View mView;
     public int defaultColor;
+    PicksAdapter picksAdapter;
 
-    static CountingFragmentA newInstance(int num) {
-      CountingFragmentA f = new CountingFragmentA();
+    static PageFragmentA newInstance(int num) {
+      PageFragmentA f = new PageFragmentA();
 
       Bundle args = new Bundle();
       args.putInt("num", num);
@@ -179,7 +183,6 @@ public class TradeActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      mNum = getArguments() != null ? getArguments().getInt("num") : 1;
     }
 
     @Override
@@ -195,7 +198,10 @@ public class TradeActivity extends FragmentActivity {
           new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
               mTeam = position + 1;
-              populateList(getActivity());
+              picksAdapter.resetSelections(PAGE_IND);
+              updateTeam(mTeam);
+              picksAdapter.notifyDataSetChanged();
+              updateSum(picksAdapter.getSum(PAGE_IND));
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -203,75 +209,52 @@ public class TradeActivity extends FragmentActivity {
             }
           });
 
-      populateList(getActivity());
-      
-      return mView;
-    }
-
-    public void populateList(FragmentActivity activity) {
       ListView lv = (ListView) mView.findViewById(R.id.picks_list);
-      cursor = mDbAdapter.fetchTeamPicks(mTeam);
-      activity.startManagingCursor(cursor);
-
-      String[] from = new String[] {
-          DbAdapter.KEY_ROUND,
-          DbAdapter.KEY_SUB_PICK,
-          DbAdapter.KEY_PICK,
-          DbAdapter.KEY_VALUE};
-      int[] to = new int[] {R.id.row_round, R.id.row_sub_pick, R.id.row_pick, R.id.row_value};
-
-      SimpleCursorAdapter picks = new SimpleCursorAdapter(
-          getActivity().getApplicationContext(),
-          R.layout.trade_row,
-          cursor,
-          from,
-          to);
-
-      lv.setAdapter(picks);
+      picksAdapter = new PicksAdapter(PAGE_IND, mCtx, mDbAdapter);
+      lv.setAdapter(picksAdapter);
       lv.setOnItemClickListener(
           new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              if(checkSelection(id)) {
-                  //Toast.makeText(getActivity(), "TRUE " + id, Toast.LENGTH_SHORT).show();
-                  removeSelection(id, view);
-              } else {
-                  //Toast.makeText(getActivity(), "FALSE " + id, Toast.LENGTH_SHORT).show();
-                  makeSelection(id, view);
-              }
+              picksAdapter.itemClicked(PAGE_IND, position);
+              picksAdapter.notifyDataSetChanged();
+              updateSum(picksAdapter.getSum(PAGE_IND));
             }
           });
+
+      updateSum(picksAdapter.getSum(PAGE_IND));
+
+      return mView;
+    }  // View onCreateView(...)
+
+    private void updateTeam(int team) {
+      picksAdapter.updateTeam(PAGE_IND, team);
     }
 
-    private boolean checkSelection(long id) {
-      return mDbAdapter.checkSelection(1, id);
+    private void updateSum(double sum) {
+      TextView tv = (TextView) mView.findViewById(R.id.footer_total);
+      tv.setText(String.valueOf(sum));
+      tv.invalidate();
+      mView.invalidate();
+      mView.buildDrawingCache();
+      mView.destroyDrawingCache();
+      picksAdapter.refresh(PAGE_IND);
     }
+  }  // public static class PageFragmentA...
 
-    private void makeSelection(long id, View view) {
-      mDbAdapter.makeSelection(1, id);
-      view.setBackgroundColor(0xFF33B5E5);
-      TextView v1 = (TextView) view.findViewById(R.id.static_round);
-      v1.setTextColor(0xFFF2F2F2);
-    }
 
-    private void removeSelection(long id, View view) {
-      mDbAdapter.removeSelection(1, id);
-      view.setBackgroundColor(0xFFF2F2F2);
-      TextView v1 = (TextView) view.findViewById(R.id.static_round);
-      v1.setTextColor(0xFF33B5E5);
-    }
-  }
-  
-
-  //-----COUNTER FRAGMENT B-----//
-  public static class CountingFragmentB extends Fragment {
+  //-----PAGE FRAGMENT B-----//
+  public static class PageFragmentB extends Fragment {
+    private final int PAGE_IND = 2; // used to indicate ViewPager page.  I'm cheating.
     int mNum;
     Cursor cursor;
     int mTeam = 1;
     View mView;
+    public int defaultColor;
+    PicksAdapter picksAdapter;
 
-    static CountingFragmentB newInstance(int num) {
-      CountingFragmentB f = new CountingFragmentB();
+    static PageFragmentB newInstance(int num) {
+      PageFragmentB f = new PageFragmentB();
 
       Bundle args = new Bundle();
       args.putInt("num", num);
@@ -283,7 +266,6 @@ public class TradeActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      mNum = getArguments() != null ? getArguments().getInt("num") : 1;
     }
 
     @Override
@@ -299,7 +281,10 @@ public class TradeActivity extends FragmentActivity {
           new OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
               mTeam = position + 1;
-              populateList(getActivity(), mNum);
+              picksAdapter.resetSelections(PAGE_IND);
+              updateTeam(mTeam);
+              picksAdapter.notifyDataSetChanged();
+              updateSum(picksAdapter.getSum(PAGE_IND));
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
@@ -307,43 +292,36 @@ public class TradeActivity extends FragmentActivity {
             }
           });
 
-      populateList(getActivity(), mNum);
-      
-      return mView;
-    }
-
-    public void populateList(FragmentActivity activity, int num) {
-      final int mNum = num;
       ListView lv = (ListView) mView.findViewById(R.id.picks_list);
-      cursor = mDbAdapter.fetchTeamPicks(mTeam);
-      activity.startManagingCursor(cursor);
-
-      String[] from = new String[] {
-          DbAdapter.KEY_ROUND,
-          DbAdapter.KEY_SUB_PICK,
-          DbAdapter.KEY_PICK,
-          DbAdapter.KEY_VALUE};
-      int[] to = new int[] {R.id.row_round, R.id.row_sub_pick, R.id.row_pick, R.id.row_value};
-
-      SimpleCursorAdapter picks = new SimpleCursorAdapter(
-          getActivity().getApplicationContext(),
-          R.layout.trade_row,
-          cursor,
-          from,
-          to);
-
-      lv.setAdapter(picks);
+      picksAdapter = new PicksAdapter(PAGE_IND, mCtx, mDbAdapter);
+      lv.setAdapter(picksAdapter);
       lv.setOnItemClickListener(
           new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              CharSequence text = "Fragment " + 2;
-              Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-              //parent.setSelected(true);
-              view.setBackgroundColor(0xFF33B5E5);
+              picksAdapter.itemClicked(PAGE_IND, position);
+              picksAdapter.notifyDataSetChanged();
+              updateSum(picksAdapter.getSum(PAGE_IND));
             }
           });
-    }
-  }
 
+      updateSum(picksAdapter.getSum(PAGE_IND));
+
+      return mView;
+    }  // View onCreateView(...)
+
+    private void updateTeam(int team) {
+      picksAdapter.updateTeam(PAGE_IND, team);
+    }
+
+    private void updateSum(double sum) {
+      TextView tv = (TextView) mView.findViewById(R.id.footer_total);
+      tv.setText(String.valueOf(sum));
+      tv.invalidate();
+      mView.invalidate();
+      mView.buildDrawingCache();
+      mView.destroyDrawingCache();
+      picksAdapter.refresh(PAGE_IND);
+    }
+  }  // public static class PageFragmentB...
 }
