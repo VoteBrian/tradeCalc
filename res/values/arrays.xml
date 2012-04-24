@@ -34,4 +34,39 @@
     <item>Tennessee Titans</item>
     <item>Washington Redskins</item>
   </string-array>
+  
+  <string-array name="team_names">
+    <item>Cardinals</item>
+    <item>Falcons</item>
+    <item>Ravens</item>
+    <item>Bills</item>
+    <item>Panthers</item>
+    <item>Bears</item>
+    <item>Bengals</item>
+    <item>Browns</item>
+    <item>Cowboys</item>
+    <item>Broncos</item>
+    <item>Lions</item>
+    <item>Packers</item>
+    <item>Texans</item>
+    <item>Colts</item>
+    <item>Jaguars</item>
+    <item>Chiefs</item>
+    <item>Dolphins</item>
+    <item>Vikings</item>
+    <item>Patriots</item>
+    <item>Saints</item>
+    <item>Giants</item>
+    <item>Jets</item>
+    <item>Raiders</item>
+    <item>Eagles</item>
+    <item>Steelers</item>
+    <item>Chargers</item>
+    <item>49ers</item>
+    <item>Seahawks</item>
+    <item>Rams</item>
+    <item>Buckaneers</item>
+    <item>Titans</item>
+    <item>Redskins</item>
+  </string-array>
 </resources>

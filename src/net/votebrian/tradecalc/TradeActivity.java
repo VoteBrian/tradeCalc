@@ -49,13 +49,58 @@ public class TradeActivity extends FragmentActivity {
         Intent i = new Intent(android.content.Intent.ACTION_SEND);
         i.setType("text/plain");
         i.putExtra(android.content.Intent.EXTRA_SUBJECT, "NFL Draft Proposal");
-        i.putExtra(android.content.Intent.EXTRA_TEXT, "Testing");
-        // TODO: put actual text here.  Test it on different apps
+        i.putExtra(android.content.Intent.EXTRA_TEXT, buildTextBody());
         startActivity(i);
         return true;
       default:
         return super.onOptionsItemSelected(item);
     }
+  }
+
+  private String buildTextBody() {
+    String post = "";
+    String teamA = "";
+    String teamB = "";
+    String selectionsA = "";
+    String selectionsB = "";
+
+    double sumA = 0;
+    double sumB = 0;
+
+    String[] names = getResources().getStringArray(R.array.team_names);
+
+    Cursor crsA = mDbAdapter.pullASelections();
+    for(int i = 0; i < crsA.getCount(); i++) {
+      teamA = names[crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_TEAM))-1];
+      sumA = sumA + crsA.getDouble(crsA.getColumnIndex(DbAdapter.KEY_VALUE));
+      if(i != 0) {
+        selectionsA = selectionsA + ", " + crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_PICK));
+      } else {
+        selectionsA = selectionsA + crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_PICK));
+      }
+      crsA.moveToNext();
+    }
+
+    Cursor crsB = mDbAdapter.pullBSelections();
+    for(int i = 0; i < crsB.getCount(); i++) {
+      teamB = names[crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_TEAM))-1];
+      sumB = sumB + crsB.getDouble(crsB.getColumnIndex(DbAdapter.KEY_VALUE));
+      if(i != 0) {
+        selectionsB = selectionsB + ", " + crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_PICK));
+      } else {
+        selectionsB = selectionsB + crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_PICK));
+      }
+      crsB.moveToNext();
+    }
+    post = String.format("I proposed the #%s trade picks %s (%,.1f pts) to the #%s for picks %s (%,.1f pts) via @NFLTradeCalc",
+        teamA,
+        selectionsA,
+        sumA,
+        teamB,
+        selectionsB,
+        sumB);
+
+    return post;
   }
 
   @Override

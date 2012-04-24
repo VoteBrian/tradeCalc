@@ -289,4 +289,34 @@ public class DbAdapter {
 
     mDb.execSQL(sql);
   }
+
+  public Cursor pullASelections() {
+    Cursor cursor = mDb.query(
+        true,
+        DB_TABLE_PICKS,
+        new String[] {KEY_ROW_ID, KEY_PICK, KEY_VALUE, KEY_TEAM},
+        KEY_SEL_A + "=" + 1,
+        null,
+        null,
+        null,
+        null,
+        null);
+    cursor.moveToFirst();
+    return cursor;
+  }
+
+  public Cursor pullBSelections() {
+    Cursor cursor = mDb.query(
+        true,
+        DB_TABLE_PICKS,
+        new String[] {KEY_ROW_ID, KEY_PICK, KEY_VALUE, KEY_TEAM},
+        KEY_SEL_B + "=" + 1,
+        null,
+        null,
+        null,
+        null,
+        null);
+    cursor.moveToFirst();
+    return cursor;
+  }
 }

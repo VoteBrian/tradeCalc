@@ -9,6 +9,7 @@ package net.votebrian.tradecalc;
 
 public final class R {
     public static final class array {
+        public static final int team_names=0x7f040001;
         public static final int teams=0x7f040000;
     }
     public static final class attr {
