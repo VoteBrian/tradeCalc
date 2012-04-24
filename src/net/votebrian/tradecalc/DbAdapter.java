@@ -294,7 +294,7 @@ public class DbAdapter {
     Cursor cursor = mDb.query(
         true,
         DB_TABLE_PICKS,
-        new String[] {KEY_ROW_ID, KEY_PICK, KEY_VALUE, KEY_TEAM},
+        new String[] {KEY_ROW_ID, KEY_ROUND, KEY_SUB_PICK, KEY_VALUE, KEY_TEAM},
         KEY_SEL_A + "=" + 1,
         null,
         null,
@@ -309,7 +309,7 @@ public class DbAdapter {
     Cursor cursor = mDb.query(
         true,
         DB_TABLE_PICKS,
-        new String[] {KEY_ROW_ID, KEY_PICK, KEY_VALUE, KEY_TEAM},
+        new String[] {KEY_ROW_ID, KEY_ROUND, KEY_SUB_PICK, KEY_VALUE, KEY_TEAM},
         KEY_SEL_B + "=" + 1,
         null,
         null,

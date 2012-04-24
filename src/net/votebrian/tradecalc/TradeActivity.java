@@ -56,7 +56,7 @@ public class TradeActivity extends FragmentActivity {
         return true;
       case R.id.menu_about:
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Created by: Brian Flores\n\nDraft Pick value data taken from:\nhttp://sports.espn.go.com/nfl/draft06/news/story?id=2410670")
+        builder.setMessage("Created by: Brian Flores and Tom Vanderslice\n\nDraft Pick value data taken from:\nhttp://sports.espn.go.com/nfl/draft06/news/story?id=2410670")
                .setCancelable(false)
                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
@@ -87,9 +87,13 @@ public class TradeActivity extends FragmentActivity {
       teamA = names[crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_TEAM))-1];
       sumA = sumA + crsA.getDouble(crsA.getColumnIndex(DbAdapter.KEY_VALUE));
       if(i != 0) {
-        selectionsA = selectionsA + ", " + crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_PICK));
+        selectionsA = selectionsA + ", " +
+                      crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_ROUND)) +
+                      "." + crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_SUB_PICK));
       } else {
-        selectionsA = selectionsA + crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_PICK));
+        selectionsA = selectionsA +
+                      crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_ROUND)) +
+                      "." + crsA.getInt(crsA.getColumnIndex(DbAdapter.KEY_SUB_PICK));
       }
       crsA.moveToNext();
     }
@@ -99,19 +103,21 @@ public class TradeActivity extends FragmentActivity {
       teamB = names[crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_TEAM))-1];
       sumB = sumB + crsB.getDouble(crsB.getColumnIndex(DbAdapter.KEY_VALUE));
       if(i != 0) {
-        selectionsB = selectionsB + ", " + crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_PICK));
-      } else {
-        selectionsB = selectionsB + crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_PICK));
-      }
+          selectionsB = selectionsB + ", " +
+                        crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_ROUND)) +
+                        "." + crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_SUB_PICK));
+        } else {
+          selectionsB = selectionsB +
+                        crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_ROUND)) +
+                        "." + crsB.getInt(crsB.getColumnIndex(DbAdapter.KEY_SUB_PICK));
+        }
       crsB.moveToNext();
     }
-    post = String.format("I proposed the #%s trade picks %s (%,.1f pts) to the #%s for picks %s (%,.1f pts) via @NFLTradeCalc",
+    post = String.format("I propose the #%s trade picks %s to the #%s for picks %s via @NFLTradeCalc",
         teamA,
         selectionsA,
-        sumA,
         teamB,
-        selectionsB,
-        sumB);
+        selectionsB);
 
     return post;
   }
@@ -297,8 +303,7 @@ public class TradeActivity extends FragmentActivity {
       ListView lv = (ListView) mView.findViewById(R.id.picks_list);
       picksAdapter = new PicksAdapter(PAGE_IND, mCtx, mDbAdapter);
       lv.setAdapter(picksAdapter);
-      // added because scrolling was turning the background black on pre-4.0 devices
-      lv.setCacheColorHint(0xFFF4F4F4);
+
       lv.setOnItemClickListener(
           new android.widget.AdapterView.OnItemClickListener() {
             @Override

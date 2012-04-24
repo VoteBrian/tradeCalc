@@ -96,7 +96,7 @@ public class PicksAdapter extends BaseAdapter {
         mRowData.ROUND[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_ROUND));
         mRowData.SUBPICK[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_SUB_PICK));
         mRowData.PICK[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_PICK));
-        mRowData.VALUE[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_VALUE));
+        mRowData.VALUE[i] = cursor.getDouble(cursor.getColumnIndex(DbAdapter.KEY_VALUE));
         mRowData.SELA[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_SEL_A));
         mRowData.SELB[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_SEL_B));
         cursor.moveToNext();
