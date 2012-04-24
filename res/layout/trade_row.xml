@@ -13,6 +13,7 @@
       android:layout_alignParentLeft="true"
       android:text="@string/static_round"
       android:textSize="24dip"
+      android:textColor="#FF323232"
       android:layout_alignBottom="@id/static_round" />
 
   <TextView
@@ -22,6 +23,7 @@
       android:layout_toRightOf="@id/static_round"
       android:paddingLeft="8dip"
       android:textSize="24dip"
+      android:textColor="#FF323232"
       android:layout_alignBottom="@id/static_round" />
 
   <TextView
@@ -32,6 +34,7 @@
       android:paddingLeft="8dip"
       android:text="@string/static_sub_round"
       android:textSize="24dip"
+      android:textColor="#FF323232"
       android:layout_alignBottom="@id/static_round" />
 
   <TextView
@@ -41,6 +44,7 @@
       android:layout_toRightOf="@id/static_sub_round"
       android:paddingLeft="8dip"
       android:textSize="24dip"
+      android:textColor="#FF323232"
       android:layout_alignBottom="@id/static_round" />
 
   <TextView
@@ -49,6 +53,7 @@
       android:layout_height="wrap_content"
       android:layout_alignParentLeft="true"
       android:layout_marginLeft="160dip"
+      android:textColor="#FF323232"
       android:text="@string/static_left_paren"
       android:layout_alignBottom="@id/static_round" />
 
@@ -56,6 +61,7 @@
       android:id="@+id/row_pick"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:textColor="#FF323232"
       android:layout_toRightOf="@id/static_left_paren"
       android:layout_alignBottom="@id/static_round" />
 
@@ -63,6 +69,7 @@
       android:id="@+id/static_right_paren"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:textColor="#FF323232"
       android:layout_toRightOf="@id/row_pick"
       android:text="@string/static_right_paren"
       android:layout_alignBottom="@id/static_round" />
@@ -72,6 +79,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textSize="24dip"
+      android:textColor="#FF323232"
       android:layout_alignParentRight="true" />
 
 </RelativeLayout>

@@ -297,6 +297,8 @@ public class TradeActivity extends FragmentActivity {
       ListView lv = (ListView) mView.findViewById(R.id.picks_list);
       picksAdapter = new PicksAdapter(PAGE_IND, mCtx, mDbAdapter);
       lv.setAdapter(picksAdapter);
+      // added because scrolling was turning the background black on pre-4.0 devices
+      lv.setCacheColorHint(0xFFF4F4F4);
       lv.setOnItemClickListener(
           new android.widget.AdapterView.OnItemClickListener() {
             @Override
