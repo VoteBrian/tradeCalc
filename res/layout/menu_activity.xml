@@ -2,8 +2,11 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android" >
   <item
-      android:id="@+id/manu_share"
+      android:id="@+id/menu_share"
       android:title="@string/menu_share"
       android:icon="@drawable/ic_action_share"
       android:showAsAction="ifRoom|withText" />
+  <item
+      android:id="@+id/menu_about"
+      android:title="@string/menu_about" />
 </menu>

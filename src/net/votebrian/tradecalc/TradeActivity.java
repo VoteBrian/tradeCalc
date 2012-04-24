@@ -2,7 +2,9 @@ package net.votebrian.tradecalc;
 
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -45,13 +47,24 @@ public class TradeActivity extends FragmentActivity {
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch(item.getItemId()) {
-      case R.id.manu_share:
+      case R.id.menu_share:
         Intent i = new Intent(android.content.Intent.ACTION_SEND);
         i.setType("text/plain");
         i.putExtra(android.content.Intent.EXTRA_SUBJECT, "NFL Draft Proposal");
         i.putExtra(android.content.Intent.EXTRA_TEXT, buildTextBody());
         startActivity(i);
         return true;
+      case R.id.menu_about:
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Created by: Brian Flores\n\nDraft Pick value data taken from:\nhttp://sports.espn.go.com/nfl/draft06/news/story?id=2410670")
+               .setCancelable(false)
+               .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                     return;
+                   }
+               });
+        AlertDialog alert = builder.create();
+        alert.show();
       default:
         return super.onOptionsItemSelected(item);
     }

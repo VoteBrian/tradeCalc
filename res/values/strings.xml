@@ -11,5 +11,6 @@
     <string name="static_total">Total: </string>
     <string name="static_for">for</string>
     <string name="menu_share">Share</string>
+    <string name="menu_about">About</string>
 
 </resources>
