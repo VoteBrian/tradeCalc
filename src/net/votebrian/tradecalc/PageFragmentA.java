@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 //-----PAGE FRAGMENT A-----//
 public class PageFragmentA extends Fragment {
@@ -23,7 +22,6 @@ public class PageFragmentA extends Fragment {
   Cursor cursor;
   int mTeam = 1;
   View mView;
-  public int defaultColor;
   PicksAdapter picksAdapter;
   OnUpdateListener updateListener;
   DbAdapter mDbAdapter;

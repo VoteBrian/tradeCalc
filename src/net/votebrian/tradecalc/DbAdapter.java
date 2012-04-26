@@ -12,12 +12,13 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 public class DbAdapter {
   private DatabaseHelper mDbHelper;
   private static SQLiteDatabase mDb;
 
-  private static final int DB_VERSION = 1;
+  private static final int DB_VERSION = 2;
 
   private static final String DB_NAME = "data.db";
   private static final String DB_PATH = "/data/data/net.votebrian.tradecalc/databases/";
@@ -28,6 +29,7 @@ public class DbAdapter {
   public static final String KEY_PICK     = "pick";
   public static final String KEY_ROUND    = "round";
   public static final String KEY_SUB_PICK = "sub_pick";
+  public static final String KEY_BLOCKED = "blocked";
   public static final String KEY_VALUE    = "value";
   public static final String KEY_TEAM     = "team";
   public static final String KEY_SEL_A    = "selA";
@@ -120,7 +122,15 @@ public class DbAdapter {
 
     @Override
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-      //what?
+      String fullFile = DB_PATH + DB_NAME;
+      mCtx.deleteDatabase(fullFile);
+      Toast.makeText(mCtx, "Deleted", Toast.LENGTH_SHORT).show();
+      this.getReadableDatabase();  // creates a database in the default directory
+      try {
+        copyDb();
+      } catch (IOException e) {
+        throw new Error("Error!  Could not copy database");
+      }
     }
   }
 
@@ -158,7 +168,7 @@ public class DbAdapter {
     Cursor mCursor = mDb.query(
         true,
         DB_TABLE_PICKS,
-        new String[] {KEY_ROW_ID, KEY_PICK, KEY_ROUND, KEY_SUB_PICK, KEY_VALUE, KEY_TEAM, KEY_SEL_A, KEY_SEL_B},
+        new String[] {KEY_ROW_ID, KEY_PICK, KEY_ROUND, KEY_SUB_PICK, KEY_BLOCKED, KEY_VALUE, KEY_TEAM, KEY_SEL_A, KEY_SEL_B},
         KEY_TEAM + "=" + team,
         null,
         null,
@@ -171,19 +181,6 @@ public class DbAdapter {
     return mCursor;
   }
 
-  public long createPick(int round, int sub_pick, int pick, double score, int team) {
-    ContentValues pickValues = new ContentValues();
-
-    pickValues.put(KEY_PICK, pick);
-    pickValues.put(KEY_ROUND, round);
-    pickValues.put(KEY_SUB_PICK, sub_pick);
-    pickValues.put(KEY_VALUE, score);
-    pickValues.put(KEY_TEAM, team);
-    pickValues.put(KEY_SEL_A, 0);
-    pickValues.put(KEY_SEL_B, 0);
-
-    return mDb.insert(DB_TABLE_PICKS, null, pickValues);
-  }
 
 
   public boolean emptyCheck() {

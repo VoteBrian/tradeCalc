@@ -8,6 +8,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 //-----EFFICIENT ADAPTER -----//
 public class PicksAdapter extends BaseAdapter {
@@ -56,15 +57,20 @@ public class PicksAdapter extends BaseAdapter {
     mPosition = position;
 
     if(mPage == 1) {
-      if(mRowData.SELA[position] > 0) {
+      if(mRowData.BLOCKED[position] > 0) {
+        convertView = mInflater.inflate(R.layout.trade_row_blocked, null);
+      } else if(mRowData.SELA[position] > 0) {
         convertView = mInflater.inflate(R.layout.trade_row_selected, null);
       } else {
         convertView = mInflater.inflate(R.layout.trade_row, null);
       }
     } else {
-      if(mRowData.SELB[position] > 0) {
+      if(mRowData.BLOCKED[position] > 0) {
+        convertView = mInflater.inflate(R.layout.trade_row_blocked, null);
+      } else if(mRowData.SELB[position] > 0) {
         convertView = mInflater.inflate(R.layout.trade_row_selected, null);
-      } else {
+      }
+      else {
         convertView = mInflater.inflate(R.layout.trade_row, null);
       }
     }
@@ -96,6 +102,7 @@ public class PicksAdapter extends BaseAdapter {
         mRowData.ROUND[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_ROUND));
         mRowData.SUBPICK[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_SUB_PICK));
         mRowData.PICK[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_PICK));
+        mRowData.BLOCKED[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_BLOCKED));
         mRowData.VALUE[i] = cursor.getDouble(cursor.getColumnIndex(DbAdapter.KEY_VALUE));
         mRowData.SELA[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_SEL_A));
         mRowData.SELB[i] = cursor.getInt(cursor.getColumnIndex(DbAdapter.KEY_SEL_B));
@@ -109,6 +116,7 @@ public class PicksAdapter extends BaseAdapter {
     int[] ROUND = {0};
     int[] SUBPICK = {0};
     int[] PICK = {0};
+    int[] BLOCKED = {0};
     double[] VALUE = {0};
     int[] SELA = {0};
     int[] SELB = {0};
@@ -117,6 +125,7 @@ public class PicksAdapter extends BaseAdapter {
       ROUND = new int[rows];
       SUBPICK = new int[rows];
       PICK = new int[rows];
+      BLOCKED = new int[rows];
       VALUE = new double[rows];
       SELA = new int[rows];
       SELB = new int[rows];
@@ -137,7 +146,11 @@ public class PicksAdapter extends BaseAdapter {
   }
 
   private void makeSelection(int page, int position) {
-    mDbAdapter.makeSelection(page, mRowData.PICK[position]);
+    if(mRowData.BLOCKED[position] > 0) {
+      Toast.makeText(mCtx, "Compensatory picks cannot be traded", Toast.LENGTH_SHORT).show();
+    } else {
+      mDbAdapter.makeSelection(page, mRowData.PICK[position]);
+    }
     refresh(page);
   }
   
