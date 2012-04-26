@@ -29,5 +29,68 @@
         android:layout_height="fill_parent"
         android:layout_weight="1" />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="@string/static_totals" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF4F4F4"
+        android:layout_weight="0"
+        android:padding="8dp"
+        android:orientation="horizontal" >
+
+      <RelativeLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/static_footer_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="8dp"
+            android:text="@string/static_footer_a" />
+
+        <TextView
+            android:id="@+id/footer_total_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/static_footer_a"
+            android:textSize="24dp"/>
+
+      </RelativeLayout>
+
+      <RelativeLayout
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/static_footer_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="8dp"
+            android:text="@string/static_footer_b" />
+
+        <TextView
+            android:id="@+id/footer_total_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/static_footer_b"
+            android:textSize="24dp"/>
+
+      </RelativeLayout>
+      
+
+    </LinearLayout>
+
   </LinearLayout>
 </TabHost>
