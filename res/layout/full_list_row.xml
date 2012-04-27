@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:orientation="vertical">
+
+  <RelativeLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp" >
+
+    <TextView
+        android:id="@+id/static_left_paren"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:textColor="#FFF4F4F4"
+        android:text="@string/static_left_paren"
+        android:layout_alignBaseline="@+id/full_row_round" />
+
+    <TextView
+        android:id="@+id/full_row_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF4F4F4"
+        android:layout_toRightOf="@id/static_left_paren"
+        android:layout_alignBaseline="@+id/full_row_round" />
+
+    <TextView
+        android:id="@+id/static_right_paren"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFF4F4F4"
+        android:layout_toRightOf="@id/full_row_pick"
+        android:text="@string/static_right_paren"
+        android:layout_alignBaseline="@+id/full_row_round" />
+
+    <TextView
+        android:id="@+id/full_row_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="35dp"
+        android:textSize="24dp"
+        android:textColor="#AAF4F4F4" />
+
+    <TextView
+        android:id="@+id/static_sub_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/full_row_round"
+        android:paddingLeft="2dp"
+        android:text="@string/static_sub_round"
+        android:textSize="24dp"
+        android:textColor="#FFF4F4F4"
+        android:layout_alignBaseline="@+id/full_row_round" />
+
+    <TextView
+        android:id="@+id/full_row_sub_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/static_sub_round"
+        android:paddingLeft="2dp"
+        android:textSize="24dp"
+        android:textColor="#FFF4F4F4"
+        android:layout_alignBaseline="@+id/full_row_round" />
+
+    <TextView
+        android:id="@+id/full_row_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dip"
+        android:textColor="#FFF4F4F4"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@+id/full_row_round" />
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content" >
+
+    <TextView 
+        android:id="@+id/full_row_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textAllCaps="true" />
+  </RelativeLayout>
+</LinearLayout>

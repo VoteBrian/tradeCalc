@@ -51,6 +51,10 @@ public class TradeActivity extends FragmentActivity
         i.putExtra(android.content.Intent.EXTRA_TEXT, buildTextBody());
         startActivity(i);
         return true;
+      case R.id.menu_list:
+        Intent intent = new Intent(this, DraftList.class);
+        startActivity(intent);
+        return true;
       case R.id.menu_about:
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Created by: Brian Flores and Tom Vanderslice\n\nDraft Pick value data taken from:\nhttp://sports.espn.go.com/nfl/draft06/news/story?id=2410670")

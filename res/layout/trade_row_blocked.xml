@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="8dip"
-    android:paddingRight="8dip" >
+    android:paddingRight="8dip"
+    android:clickable="false" >
 
   <TextView
       android:id="@+id/static_round"
@@ -32,7 +33,7 @@
       android:layout_height="wrap_content"
       android:layout_toRightOf="@id/row_round"
       android:paddingLeft="8dip"
-      android:text="@string/static_sub_round"
+      android:text="@string/dash"
       android:textSize="24dip"
       android:textColor="#FFC2C2C2"
       android:layout_alignBottom="@id/static_round" />

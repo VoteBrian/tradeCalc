@@ -7,6 +7,10 @@
       android:icon="@drawable/ic_action_share"
       android:showAsAction="ifRoom|withText" />
   <item
+      android:id="@+id/menu_list"
+      android:title="@string/menu_list"
+      android:showAsAction="ifRoom|withText" />
+  <item
       android:id="@+id/menu_about"
       android:title="@string/menu_about" />
 </menu>

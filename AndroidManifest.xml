@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.votebrian.tradecalc"
-    android:versionCode="3"
-    android:versionName="1.0.3" >
+    android:versionCode="5"
+    android:versionName="1.0.5" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -13,7 +13,7 @@
         android:label="@string/app_name" >
         <activity
             android:name=".TradeActivity"
-            android:label="@string/app_name"
+            android:label="@string/draft_day"
             android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PageFragmentA">
+            android:name=".DraftList"
+            android:label="@string/full_list_label"
+            android:theme="@android:style/Theme.Holo.Dialog" >
         </activity>
     </application>
 

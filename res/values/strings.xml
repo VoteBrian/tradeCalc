@@ -2,9 +2,11 @@
 <resources>
 
     <string name="app_name">NFL Trade Calc</string>
+    <string name="draft_day">NFL Trade Calc</string>
     <string name="default_footer">Total: 0 pts</string>
     <string name="static_round">Round </string>
-    <string name="static_sub_round">-</string>
+    <string name="static_sub_round">.</string>
+    <string name="dash">-</string>
     <string name="static_left_paren">(</string>
     <string name="static_right_paren">)</string>
     <string name="static_pts">pts</string>
@@ -12,8 +14,11 @@
     <string name="static_for">for</string>
     <string name="menu_share">Share</string>
     <string name="menu_about">About</string>
+    <string name="menu_list">Draft List</string>
     <string name="static_totals">Totals</string>
     <string name="static_footer_a">A:</string>
     <string name="static_footer_b">B:</string>
+    <string name="dialog">Testing some shit#8230;</string>
+    <string name="full_list_label">Draft Order</string>
 
 </resources>

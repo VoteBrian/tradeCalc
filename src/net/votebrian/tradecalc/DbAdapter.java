@@ -5,14 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 public class DbAdapter {
   private DatabaseHelper mDbHelper;
@@ -51,16 +49,17 @@ public class DbAdapter {
 
     public void createDatabase() throws IOException {
       boolean dBExists = checkDb();
+      String fullPath = DB_PATH + DB_NAME;
 
       if(dBExists) {
-        // awesome, do nothing
-      } else {
-        this.getReadableDatabase();  // creates a database in the default directory
-        try {
-          copyDb();
-        } catch (IOException e) {
-          throw new Error("Error!  Could not copy database");
-        }
+        mCtx.deleteDatabase(fullPath);
+      }
+
+      this.getReadableDatabase();  // creates a database in the default directory
+      try {
+        copyDb();
+      } catch (IOException e) {
+        throw new Error("Error!  Could not copy database");
       }
     }
 
@@ -124,7 +123,6 @@ public class DbAdapter {
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
       String fullFile = DB_PATH + DB_NAME;
       mCtx.deleteDatabase(fullFile);
-      Toast.makeText(mCtx, "Deleted", Toast.LENGTH_SHORT).show();
       this.getReadableDatabase();  // creates a database in the default directory
       try {
         copyDb();
@@ -308,6 +306,21 @@ public class DbAdapter {
         DB_TABLE_PICKS,
         new String[] {KEY_ROW_ID, KEY_ROUND, KEY_SUB_PICK, KEY_VALUE, KEY_TEAM},
         KEY_SEL_B + "=" + 1,
+        null,
+        null,
+        null,
+        null,
+        null);
+    cursor.moveToFirst();
+    return cursor;
+  }
+
+  public Cursor fetchAllPicks() {
+    Cursor cursor = mDb.query (
+        true,
+        DB_TABLE_PICKS,
+        new String[] {KEY_ROW_ID, KEY_ROUND, KEY_SUB_PICK, KEY_PICK, KEY_VALUE, KEY_TEAM},
+        null,
         null,
         null,
         null,

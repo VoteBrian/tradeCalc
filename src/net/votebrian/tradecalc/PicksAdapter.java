@@ -17,8 +17,8 @@ public class PicksAdapter extends BaseAdapter {
   DbAdapter mDbAdapter;
   RowData mRowData;
   Context mCtx;
+  ViewHolder mHolder;
   int mTeam = 1;
-  int mPosition;
   double mSum = 0;
   int mPage;
 
@@ -35,6 +35,7 @@ public class PicksAdapter extends BaseAdapter {
     mInflater = LayoutInflater.from(context);
     mCtx = context;
     mDbAdapter = adapter;
+    mHolder = new ViewHolder();
 
     mRowData = new RowData();
     
@@ -53,8 +54,6 @@ public class PicksAdapter extends BaseAdapter {
   }
 
   public View getView(int position, View convertView, ViewGroup parent) {
-    ViewHolder holder;
-    mPosition = position;
 
     if(mPage == 1) {
       if(mRowData.BLOCKED[position] > 0) {
@@ -75,18 +74,17 @@ public class PicksAdapter extends BaseAdapter {
       }
     }
 
-    holder = new ViewHolder();
-    holder.round = (TextView) convertView.findViewById(R.id.row_round);
-    holder.sub_pick = (TextView) convertView.findViewById(R.id.row_sub_pick);
-    holder.pick = (TextView) convertView.findViewById(R.id.row_pick);
-    holder.value = (TextView) convertView.findViewById(R.id.row_value);
+    mHolder.round = (TextView) convertView.findViewById(R.id.row_round);
+    mHolder.sub_pick = (TextView) convertView.findViewById(R.id.row_sub_pick);
+    mHolder.pick = (TextView) convertView.findViewById(R.id.row_pick);
+    mHolder.value = (TextView) convertView.findViewById(R.id.row_value);
 
-    convertView.setTag(holder);
+    convertView.setTag(mHolder);
 
-    holder.round.setText(String.valueOf(mRowData.ROUND[position]));
-    holder.sub_pick.setText(String.valueOf(mRowData.SUBPICK[position]));
-    holder.pick.setText(String.valueOf(mRowData.PICK[position]));
-    holder.value.setText(String.valueOf(mRowData.VALUE[position]));
+    mHolder.round.setText(String.valueOf(mRowData.ROUND[position]));
+    mHolder.sub_pick.setText(String.valueOf(mRowData.SUBPICK[position]));
+    mHolder.pick.setText(String.valueOf(mRowData.PICK[position]));
+    mHolder.value.setText(String.valueOf(mRowData.VALUE[position]));
 
     return convertView;
   } // public View getView()
@@ -183,7 +181,7 @@ public class PicksAdapter extends BaseAdapter {
 
   public double getSum(int page) {
     refresh(page);
-    return mSum;
+    return (double) (Math.round(mSum*100))/100;
   }
 
   public void resetSelections(int page) {
