@@ -9,19 +9,21 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-public class TradeActivity extends FragmentActivity
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.app.SherlockFragment;
+
+public class TradeActivity extends SherlockFragmentActivity
     implements PageFragmentA.OnUpdateListener, PageFragmentB.OnUpdateListener {
 
   private TradePagerAdapter mTabsAdapter;
@@ -34,9 +36,58 @@ public class TradeActivity extends FragmentActivity
 
   static DbAdapter mDbAdapter;
 
+  //-----ON CREATE-----//
+  @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.main);
+    mCtx = this;
+
+    mDbAdapter = new DbAdapter(mCtx);
+    mDbAdapter.open();
+
+    mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+    mTabHost.setup();
+
+    mViewPager = (ViewPager) findViewById(R.id.trade_pager);
+
+    mTabsAdapter = new TradePagerAdapter(this, mTabHost, mViewPager);
+
+    mTabsAdapter.addTab(mTabHost.newTabSpec("teamA").setIndicator("Team A"),
+        PageFragmentA.class, null);
+    mTabsAdapter.addTab(mTabHost.newTabSpec("teamB").setIndicator("Team B"),
+        PageFragmentB.class, null);
+
+    if (savedInstanceState != null) {
+      mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
+    }
+
+    tvTotalA = (TextView) findViewById(R.id.footer_total_a);
+    tvTotalB = (TextView) findViewById(R.id.footer_total_b);
+  }
+
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    mDbAdapter.close();
+  }
+
+  @Override
+  public void onUpdatedA(double total) {
+    tvTotalA.setText(String.valueOf(total));
+  }
+
+  @Override
+  public void onUpdatedB(double total) {
+    tvTotalB.setText(String.valueOf(total));
+  }
+
+  //-----ON CREATE OPTIONS MENU-----//
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    MenuInflater inflater = getMenuInflater();
+    //MenuInflater inflater = getMenuInflater();
+    MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.layout.menu_activity, menu);
     return true;
   }
@@ -123,53 +174,6 @@ public class TradeActivity extends FragmentActivity
     return post;
   }
 
-  //-----ON CREATE-----//
-  @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.main);
-    mCtx = this;
-
-    mDbAdapter = new DbAdapter(mCtx);
-    mDbAdapter.open();
-
-    mTabHost = (TabHost) findViewById(android.R.id.tabhost);
-    mTabHost.setup();
-
-    mViewPager = (ViewPager) findViewById(R.id.trade_pager);
-
-    mTabsAdapter = new TradePagerAdapter(this, mTabHost, mViewPager);
-
-    mTabsAdapter.addTab(mTabHost.newTabSpec("teamA").setIndicator("Team A"),
-        PageFragmentA.class, null);
-    mTabsAdapter.addTab(mTabHost.newTabSpec("teamB").setIndicator("Team B"),
-        PageFragmentB.class, null);
-
-    if (savedInstanceState != null) {
-      mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
-    }
-
-    tvTotalA = (TextView) findViewById(R.id.footer_total_a);
-    tvTotalB = (TextView) findViewById(R.id.footer_total_b);
-  }
-
-
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    mDbAdapter.close();
-  }
-
-  @Override
-  public void onUpdatedA(double total) {
-    tvTotalA.setText(String.valueOf(total));
-  }
-
-  @Override
-  public void onUpdatedB(double total) {
-    tvTotalB.setText(String.valueOf(total));
-  }
-
 
   //-----PAGER ADAPTER-----//
   public static class TradePagerAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
@@ -178,7 +182,7 @@ public class TradeActivity extends FragmentActivity
     private final ViewPager mViewPager;
     private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-    public TradePagerAdapter(FragmentActivity activity, TabHost tabHost, ViewPager pager) {
+    public TradePagerAdapter(SherlockFragmentActivity activity, TabHost tabHost, ViewPager pager) {
       super(activity.getSupportFragmentManager());
       mContext = activity;
       mTabHost = tabHost;
@@ -216,10 +220,10 @@ public class TradeActivity extends FragmentActivity
     }
 
     @Override
-    public Fragment getItem(int position) {
-      Fragment fragment;
+    public SherlockFragment getItem(int position) {
+      SherlockFragment fragment;
       TabInfo info = mTabs.get(position);
-      fragment = Fragment.instantiate(mContext, info.clss.getName(), info.args);
+      fragment = (SherlockFragment) Fragment.instantiate(mContext, info.clss.getName(), info.args);
       return fragment;
     }
 

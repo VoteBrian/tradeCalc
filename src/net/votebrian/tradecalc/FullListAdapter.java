@@ -74,6 +74,11 @@ public class FullListAdapter extends BaseAdapter {
   }
 
   @Override
+  public boolean areAllItemsEnabled() {
+    return false;
+  }
+
+  @Override
   public int getCount() {
     return mRowData.length();
   }

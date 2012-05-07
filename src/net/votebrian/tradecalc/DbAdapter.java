@@ -21,20 +21,19 @@ public class DbAdapter {
   private static final String DB_NAME = "data.db";
   private static final String DB_PATH = "/data/data/net.votebrian.tradecalc/databases/";
 
+  // table names
   private static final String DB_TABLE_PICKS = "picks";
 
+  // column names in database
   public static final String KEY_ROW_ID   = "_id";
   public static final String KEY_PICK     = "pick";
   public static final String KEY_ROUND    = "round";
   public static final String KEY_SUB_PICK = "sub_pick";
-  public static final String KEY_BLOCKED = "blocked";
+  public static final String KEY_BLOCKED  = "blocked";
   public static final String KEY_VALUE    = "value";
   public static final String KEY_TEAM     = "team";
   public static final String KEY_SEL_A    = "selA";
   public static final String KEY_SEL_B    = "selB";
-
-  public static final int SEL_TEAM_A = 1;
-  public static final int SEL_TEAM_B = 2;
 
   private static Context mCtx;
 
@@ -194,7 +193,7 @@ public class DbAdapter {
   // Returns a Cursor to the "selA" or "selB" columns
   public Cursor fetchSelections(int sel_team) {
     Cursor mCursor;
-    if(sel_team == SEL_TEAM_A) {
+    if(sel_team == 1) {
       mCursor = mDb.query(
           true,
           DB_TABLE_PICKS,

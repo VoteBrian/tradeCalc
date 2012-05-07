@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 //-----PAGE FRAGMENT A-----//
-public class PageFragmentA extends Fragment {
+public class PageFragmentA extends SherlockFragment {
   private final int PAGE_IND = 1; // used to indicate ViewPager page.  I'm cheating.
   Context mCtx;
   int mNum;
