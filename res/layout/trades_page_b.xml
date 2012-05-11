@@ -21,14 +21,6 @@
         android:layout_weight="1"
         android:orientation="horizontal" >
 
-      <ListView
-          android:name="net.votebrian.tradecalc.PicksList"
-          android:id="@+id/picks_list"
-          android:layout_width="0dp"
-          android:layout_height="fill_parent"
-          android:layout_weight="1"
-          android:cacheColorHint="#FFF4F4F4" />
-
       <LinearLayout
           android:layout_width="10dp"
           android:layout_height="fill_parent"
@@ -66,7 +58,15 @@
             android:background="#FFAADFF3" />
 
       </LinearLayout>
-        
+
+      <ListView
+          android:name="net.votebrian.tradecalc.PicksList"
+          android:id="@+id/picks_list"
+          android:layout_width="0dp"
+          android:layout_height="fill_parent"
+          android:layout_weight="1"
+          android:cacheColorHint="#FFF4F4F4" />
+
     </LinearLayout>
 
 

@@ -59,7 +59,7 @@ public class PageFragmentB extends SherlockFragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
-    mView = inflater.inflate(R.layout.trades_page, container, false);
+    mView = inflater.inflate(R.layout.trades_page_b, container, false);
 
     Spinner s = (Spinner) mView.findViewById(R.id.spinner);
     ArrayAdapter<CharSequence> sAdapter = ArrayAdapter.createFromResource(mCtx, R.array.teams, android.R.layout.simple_spinner_item);

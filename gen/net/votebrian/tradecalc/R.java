@@ -891,6 +891,7 @@ containing a value of this type.
         public static final int trade_row_blocked=0x7f03001b;
         public static final int trade_row_selected=0x7f03001c;
         public static final int trades_page=0x7f03001d;
+        public static final int trades_page_b=0x7f03001e;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -924,24 +925,25 @@ containing a value of this type.
          */
         public static final int abs__shareactionprovider_share_with_application=0x7f090009;
         public static final int app_name=0x7f09000a;
-        public static final int dash=0x7f09000f;
-        public static final int default_footer=0x7f09000c;
-        public static final int dialog=0x7f09001b;
-        public static final int draft_day=0x7f09000b;
-        public static final int full_list_label=0x7f09001c;
-        public static final int menu_about=0x7f090016;
-        public static final int menu_list=0x7f090017;
-        public static final int menu_share=0x7f090015;
-        public static final int static_footer_a=0x7f090019;
-        public static final int static_footer_b=0x7f09001a;
-        public static final int static_for=0x7f090014;
-        public static final int static_left_paren=0x7f090010;
-        public static final int static_pts=0x7f090012;
-        public static final int static_right_paren=0x7f090011;
-        public static final int static_round=0x7f09000d;
-        public static final int static_sub_round=0x7f09000e;
-        public static final int static_total=0x7f090013;
-        public static final int static_totals=0x7f090018;
+        public static final int dash=0x7f09000e;
+        public static final int default_footer=0x7f09000b;
+        public static final int dialog=0x7f09001a;
+        public static final int full_list_label=0x7f09001b;
+        public static final int left=0x7f09001c;
+        public static final int menu_about=0x7f090015;
+        public static final int menu_list=0x7f090016;
+        public static final int menu_share=0x7f090014;
+        public static final int right=0x7f09001d;
+        public static final int static_footer_a=0x7f090018;
+        public static final int static_footer_b=0x7f090019;
+        public static final int static_for=0x7f090013;
+        public static final int static_left_paren=0x7f09000f;
+        public static final int static_pts=0x7f090011;
+        public static final int static_right_paren=0x7f090010;
+        public static final int static_round=0x7f09000c;
+        public static final int static_sub_round=0x7f09000d;
+        public static final int static_total=0x7f090012;
+        public static final int static_totals=0x7f090017;
     }
     public static final class style {
         public static final int DialogWindowTitle_Sherlock=0x7f0a0033;

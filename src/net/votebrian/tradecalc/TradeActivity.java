@@ -10,22 +10,24 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TabHost;
-import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.app.SherlockFragment;
 
 public class TradeActivity extends SherlockFragmentActivity
     implements PageFragmentA.OnUpdateListener, PageFragmentB.OnUpdateListener {
 
+  private ActionBar mBar;
   private TradePagerAdapter mTabsAdapter;
   private ViewPager mViewPager;
   private TabHost mTabHost;
@@ -49,13 +51,17 @@ public class TradeActivity extends SherlockFragmentActivity
     mTabHost = (TabHost) findViewById(android.R.id.tabhost);
     mTabHost.setup();
 
+    mBar = getSupportActionBar();
+    mBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+    //mBar.setDisplayOptions(0, ActionBar.DISPLAY_SHOW_TITLE);
+
     mViewPager = (ViewPager) findViewById(R.id.trade_pager);
 
-    mTabsAdapter = new TradePagerAdapter(this, mTabHost, mViewPager);
+    mTabsAdapter = new TradePagerAdapter(this, mViewPager);
 
-    mTabsAdapter.addTab(mTabHost.newTabSpec("teamA").setIndicator("Team A"),
+    mTabsAdapter.addTab(mBar.newTab().setText("Team A"),
         PageFragmentA.class, null);
-    mTabsAdapter.addTab(mTabHost.newTabSpec("teamB").setIndicator("Team B"),
+    mTabsAdapter.addTab(mBar.newTab().setText("Team B"),
         PageFragmentB.class, null);
 
     if (savedInstanceState != null) {
@@ -176,41 +182,37 @@ public class TradeActivity extends SherlockFragmentActivity
 
 
   //-----PAGER ADAPTER-----//
-  public static class TradePagerAdapter extends FragmentPagerAdapter implements TabHost.OnTabChangeListener, ViewPager.OnPageChangeListener {
+  public static class TradePagerAdapter extends FragmentPagerAdapter implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
     private final Context mContext;
-    private final TabHost mTabHost;
     private final ViewPager mViewPager;
+    private final ActionBar mActionBar;
     private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
 
-    public TradePagerAdapter(SherlockFragmentActivity activity, TabHost tabHost, ViewPager pager) {
+    public TradePagerAdapter(SherlockFragmentActivity activity, ViewPager pager) {
       super(activity.getSupportFragmentManager());
       mContext = activity;
-      mTabHost = tabHost;
+      mActionBar = activity.getSupportActionBar();
       mViewPager = pager;
-      mTabHost.setOnTabChangedListener(this);
       mViewPager.setAdapter(this);
       mViewPager.setOnPageChangeListener(this);
     }
 
     static final class TabInfo {
-      private final String tag;
       private final Class<?> clss;
       private final Bundle args;
 
-      TabInfo(String _tag, Class<?> _clss, Bundle _args) {
-        tag = _tag;
+      TabInfo(Class<?> _clss, Bundle _args) {
         clss = _clss;
         args = _args;
       }
     }
 
-    public void addTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args) {
-      tabSpec.setContent(new DummyTabFactory(mContext));
-      String tag = tabSpec.getTag();
-
-      TabInfo info = new TabInfo(tag, clss, args);
+    public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
+      TabInfo info = new TabInfo(clss, args);
+      tab.setTag(info);
+      tab.setTabListener(this);
       mTabs.add(info);
-      mTabHost.addTab(tabSpec);
+      mActionBar.addTab(tab);
       notifyDataSetChanged();
     }
 
@@ -228,9 +230,23 @@ public class TradeActivity extends SherlockFragmentActivity
     }
 
     @Override
-    public void onTabChanged(String tabId) {
-      int position = mTabHost.getCurrentTab();
-      mViewPager.setCurrentItem(position);
+    public void onTabSelected(Tab tab, FragmentTransaction ft) {
+      Object tag = tab.getTag();
+      for(int i=0; i < mTabs.size(); i++) {
+        if(mTabs.get(i) == tag) {
+          mViewPager.setCurrentItem(i);
+        }
+      }
+    }
+
+    @Override
+    public void onTabReselected(Tab tab, FragmentTransaction ft) {
+      // nothing
+    }
+
+    @Override
+    public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+      // nothing
     }
 
     @Override
@@ -238,14 +254,9 @@ public class TradeActivity extends SherlockFragmentActivity
       // nothing
     }
 
-    // This seems to just correct for a change in focus
     @Override
     public void onPageSelected(int position) {
-      TabWidget widget = mTabHost.getTabWidget();
-      int oldFocusability = widget.getDescendantFocusability();
-      widget.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
-      mTabHost.setCurrentTab(position);
-      widget.setDescendantFocusability(oldFocusability);
+      mActionBar.setSelectedNavigationItem(position);
     }
 
     @Override
