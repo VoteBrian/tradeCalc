@@ -56,6 +56,10 @@ public class PageFragmentA extends SherlockFragment {
     mCtx = context;
   }
 
+  public void setDbHelper(DbAdapter adapter) {
+    mDbAdapter = adapter;
+  }
+
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {

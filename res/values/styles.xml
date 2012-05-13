@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="picks_theme" parent="android:Theme.Light">
+    <item name="android:listViewStyle">@style/picks_listView</item>
+  </style>
+
+  <style name="picks_listView" parent="android:style/Widget.ListView">
+    
+  </style>
+</resources>

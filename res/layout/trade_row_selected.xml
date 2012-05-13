@@ -5,83 +5,96 @@
     android:layout_height="wrap_content"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:background="#FF33B5E5" >
+    android:background="@color/dark_blue" >
 
   <TextView
-      android:id="@+id/static_round"
+      android:id="@+id/spacer"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignParentLeft="true"
-      android:text="@string/static_round"
-      android:textSize="24dip"
-      android:textColor="#FF323232"
-      android:layout_alignBottom="@id/static_round" />
+      android:text="@string/space"
+
+      android:textSize="30dp"
+      android:textColor="@color/white" />
 
   <TextView
       android:id="@+id/row_round"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_toRightOf="@id/static_round"
-      android:paddingLeft="8dip"
-      android:textSize="24dip"
-      android:textColor="#FF323232"
-      android:layout_alignBottom="@id/static_round" />
+      android:layout_alignParentLeft="true"
+      android:paddingLeft="45dp"
+      android:layout_alignBottom="@id/spacer"
+      
+      android:textSize="24dp"
+      android:textColor="@color/dark_grey" />
 
   <TextView
       android:id="@+id/static_sub_round"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_toRightOf="@id/row_round"
-      android:paddingLeft="8dip"
-      android:text="@string/dash"
-      android:textSize="24dip"
-      android:textColor="#FF323232"
-      android:layout_alignBottom="@id/static_round" />
+      android:paddingLeft="2dp"
+      android:paddingRight="2dp"
+      android:text="@string/static_sub_round"
+      android:layout_alignBottom="@id/spacer"
+      
+      android:textSize="24dp"
+      android:textColor="@color/dark_grey" />
 
   <TextView
       android:id="@+id/row_sub_pick"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_toRightOf="@id/static_sub_round"
-      android:paddingLeft="8dip"
-      android:textSize="24dip"
-      android:textColor="#FF323232"
-      android:layout_alignBottom="@id/static_round" />
+      android:layout_alignBottom="@id/spacer"
+      
+      android:textSize="24dp"
+      android:textColor="@color/dark_grey" />
 
+  
+<!--               -->
+<!--  OVERALL PICK -->
   <TextView
       android:id="@+id/static_left_paren"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="#FF323232"
       android:layout_alignParentLeft="true"
-      android:layout_marginLeft="160dip"
       android:text="@string/static_left_paren"
-      android:layout_alignBottom="@id/static_round" />
+      android:layout_alignBaseline="@id/spacer"
+      
+      android:textSize="12dp"
+      android:textColor="@color/dark_grey" />
 
   <TextView
       android:id="@+id/row_pick"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="#FF323232"
       android:layout_toRightOf="@id/static_left_paren"
-      android:layout_alignBottom="@id/static_round" />
+      android:layout_alignBaseline="@id/spacer"
+      
+      android:textSize="12dp"
+      android:textColor="@color/dark_grey" />
 
   <TextView
       android:id="@+id/static_right_paren"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="#FF323232"
       android:layout_toRightOf="@id/row_pick"
       android:text="@string/static_right_paren"
-      android:layout_alignBottom="@id/static_round" />
+      android:layout_alignBaseline="@id/spacer"
+      
+      android:textSize="12dp"
+      android:textColor="@color/dark_grey" />
+<!--               -->
 
   <TextView
       android:id="@+id/row_value"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textColor="#FF323232"
       android:layout_alignParentRight="true"
-      android:textSize="24dip"
-      android:layout_alignBottom="@id/static_round" />
+      android:layout_alignBaseline="@id/spacer"
+      
+      android:textSize="24dp"
+      android:textColor="@color/dark_grey" />
 
 </RelativeLayout>

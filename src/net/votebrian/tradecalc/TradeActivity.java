@@ -36,7 +36,7 @@ public class TradeActivity extends SherlockFragmentActivity
 
   private static Context mCtx;
 
-  static DbAdapter mDbAdapter;
+  public static DbAdapter mDbAdapter;
 
   //-----ON CREATE-----//
   @Override
@@ -70,6 +70,10 @@ public class TradeActivity extends SherlockFragmentActivity
 
     tvTotalA = (TextView) findViewById(R.id.footer_total_a);
     tvTotalB = (TextView) findViewById(R.id.footer_total_b);
+  }
+
+  public DbAdapter getDbAdapter() {
+    return mDbAdapter;
   }
 
 

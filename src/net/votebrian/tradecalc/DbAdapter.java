@@ -121,6 +121,7 @@ public class DbAdapter {
     @Override
     public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
       String fullFile = DB_PATH + DB_NAME;
+      /*
       mCtx.deleteDatabase(fullFile);
       this.getReadableDatabase();  // creates a database in the default directory
       try {
@@ -128,6 +129,7 @@ public class DbAdapter {
       } catch (IOException e) {
         throw new Error("Error!  Could not copy database");
       }
+      */
     }
   }
 

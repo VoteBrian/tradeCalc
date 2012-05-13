@@ -35,18 +35,18 @@
         android:paddingLeft="8dp"
         android:text="@string/static_totals"
         android:textAllCaps="true"
-        android:background="#FF323232"
-        android:textColor="#FFF3F3F3" />
+        android:background="@color/dark_grey"
+        android:textColor="@color/white" />
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="#FFA3A3A3" />
+        android:background="@color/light_grey" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="#FF323232"
+        android:background="@color/dark_grey"
         android:layout_weight="0"
         android:padding="8dp"
         android:orientation="horizontal" >
@@ -60,12 +60,13 @@
             android:id="@+id/static_footer_a"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="#FFF3F3F3"
             android:layout_alignParentLeft="true"
             android:paddingLeft="25dp"
             android:paddingRight="8dp"
-            android:text="@string/static_footer_a" />
+            android:text="@string/static_footer_a"
+
+            android:textSize="20dp"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/footer_total_a"
@@ -73,15 +74,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:paddingRight="25dp"
+
             android:textSize="24dp"
-            android:textColor="#FFF3F3F3" />
+            android:textColor="@color/white" />
 
       </RelativeLayout>
 
       <FrameLayout
           android:layout_width="1dp"
           android:layout_height="match_parent"
-          android:background="#FFA3A3A3" />
+          android:background="@color/light_grey" />
 
       <RelativeLayout
           android:layout_width="fill_parent"
@@ -92,11 +94,12 @@
             android:id="@+id/static_footer_b"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="#FFF3F3F3"
             android:layout_alignParentLeft="true"
             android:paddingLeft="25dp"
-            android:text="@string/static_footer_b" />
+            android:text="@string/static_footer_b"
+
+            android:textSize="20dp"
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/footer_total_b"
@@ -104,8 +107,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:paddingRight="25dp"
+
             android:textSize="24dp"
-            android:textColor="#FFF3F3F3" />
+            android:textColor="@color/white" />
 
       </RelativeLayout>
       
