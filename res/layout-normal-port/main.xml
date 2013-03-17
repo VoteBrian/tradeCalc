@@ -8,6 +8,7 @@
   <LinearLayout
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
+      android:background="@drawable/background"
       android:orientation="vertical" >
 
     <TabWidget
@@ -23,96 +24,79 @@
         android:layout_height="0dp"
         android:layout_weight="0" />
 
+    <!-- Content -->
     <android.support.v4.view.ViewPager
         android:id="@+id/trade_pager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1" />
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
-        android:text="@string/static_totals"
-        android:textAllCaps="true"
-        android:background="@color/dark_grey"
-        android:textColor="@color/white" />
-
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:background="@color/light_grey" />
-
+    <!-- Footer -->
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_grey"
         android:layout_weight="0"
-        android:padding="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
         android:orientation="horizontal" >
 
-      <RelativeLayout
+      <LinearLayout
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="1" >
+          android:layout_weight="1"
+          android:background="@drawable/rounded_left"
+          android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/static_footer_a"
-            android:layout_width="wrap_content"
+            android:id="@+id/footer_team_a"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="25dp"
-            android:paddingRight="8dp"
-            android:text="@string/static_footer_a"
-
-            android:textSize="20dp"
-            android:textColor="@color/white" />
+            android:gravity="center_horizontal"
+            android:textAllCaps="true"
+            android:textColor="@color/dark_grey" />
 
         <TextView
             android:id="@+id/footer_total_a"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="25dp"
+            android:gravity="center_horizontal"
 
             android:textSize="24dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/dark_grey" />
 
-      </RelativeLayout>
+      </LinearLayout>
 
       <FrameLayout
-          android:layout_width="1dp"
+          android:layout_width="2dp"
           android:layout_height="match_parent"
-          android:background="@color/light_grey" />
+          android:background="#00FFFFFF" />
 
-      <RelativeLayout
+      <LinearLayout
           android:layout_width="fill_parent"
           android:layout_height="wrap_content"
-          android:layout_weight="1" >
+          android:layout_weight="1"
+          android:background="@drawable/rounded_right"
+          android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/static_footer_b"
-            android:layout_width="wrap_content"
+            android:id="@+id/footer_team_b"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="25dp"
-            android:text="@string/static_footer_b"
-
-            android:textSize="20dp"
-            android:textColor="@color/white" />
+            android:gravity="center_horizontal"
+            android:textAllCaps="true"
+            android:textColor="@color/dark_grey" />
 
         <TextView
             android:id="@+id/footer_total_b"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="25dp"
+            android:gravity="center_horizontal"
 
             android:textSize="24dp"
-            android:textColor="@color/white" />
+            android:textColor="@color/dark_grey" />
 
-      </RelativeLayout>
-      
+      </LinearLayout>
 
     </LinearLayout>
 

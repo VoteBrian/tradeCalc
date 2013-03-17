@@ -32,7 +32,10 @@ public class TradeActivity extends SherlockFragmentActivity
   private ViewPager mViewPager;
   private TabHost mTabHost;
   TextView tvTotalA;
+  TextView tvTeamA;
   TextView tvTotalB;
+  TextView tvTeamB;
+  String team_names[];
 
   private static Context mCtx;
 
@@ -45,9 +48,13 @@ public class TradeActivity extends SherlockFragmentActivity
     setContentView(R.layout.main);
     mCtx = this;
 
+    // populate team_names array for use in footer
+    team_names = getResources().getStringArray(R.array.team_names);
+
     mDbAdapter = new DbAdapter(mCtx);
     mDbAdapter.open();
 
+    //LinearLayout testLayout = getContentById("testLayout");
     mTabHost = (TabHost) findViewById(android.R.id.tabhost);
     mTabHost.setup();
 
@@ -69,7 +76,9 @@ public class TradeActivity extends SherlockFragmentActivity
     }
 
     tvTotalA = (TextView) findViewById(R.id.footer_total_a);
+    tvTeamA = (TextView) findViewById(R.id.footer_team_a);
     tvTotalB = (TextView) findViewById(R.id.footer_total_b);
+    tvTeamB = (TextView) findViewById(R.id.footer_team_b);
   }
 
   public DbAdapter getDbAdapter() {
@@ -84,19 +93,28 @@ public class TradeActivity extends SherlockFragmentActivity
   }
 
   @Override
-  public void onUpdatedA(double total) {
+  public void onUpdatedTotalA(double total) {
     tvTotalA.setText(String.valueOf(total));
   }
 
   @Override
-  public void onUpdatedB(double total) {
+  public void onUpdatedTeamA(int team) {
+	  tvTeamA.setText(team_names[team]);
+  }
+
+  @Override
+  public void onUpdatedTotalB(double total) {
     tvTotalB.setText(String.valueOf(total));
+  }
+
+  @Override
+  public void onUpdatedTeamB(int team) {
+	  tvTeamB.setText(team_names[team]);
   }
 
   //-----ON CREATE OPTIONS MENU-----//
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    //MenuInflater inflater = getMenuInflater();
     MenuInflater inflater = getSupportMenuInflater();
     inflater.inflate(R.layout.menu_activity, menu);
     return true;

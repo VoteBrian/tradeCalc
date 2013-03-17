@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Top Level LinearLayout used only to give appearance of swiping pages moving off-screen -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:padding="10dp" >
+
   <LinearLayout
-      xmlns:android="http://schemas.android.com/apk/res/android"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
       android:orientation="vertical"
-      android:background="#FFF4F4F4" >
+      android:padding="10dp"
+      android:background="@drawable/rounded_bg" >
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:layout_marginTop="8dip"
+        android:textSize="36dp"
         android:drawSelectorOnTop="true" />
 
     <ListView
-        android:name="net.votebrian.tradecalc.PicksList"
         android:id="@+id/picks_list"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:cacheColorHint="@color/white"
+        android:cacheColorHint="@android:color/transparent"
         android:listSelector="@drawable/list_selector" />
 
   </LinearLayout>
+
+</LinearLayout>

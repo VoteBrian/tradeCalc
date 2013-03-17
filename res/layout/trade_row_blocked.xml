@@ -4,8 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:background="@color/white" >
+    android:paddingRight="8dp" >
 
   <TextView
       android:id="@+id/spacer"
@@ -14,8 +13,7 @@
       android:layout_alignParentLeft="true"
       android:text="@string/space"
 
-      android:textSize="30dp"
-      android:textColor="@color/white" />
+      android:textSize="30dp" />
 
   <TextView
       android:id="@+id/row_round"
@@ -26,7 +24,7 @@
       android:layout_alignBottom="@id/spacer"
       
       android:textSize="24dp"
-      android:textColor="@color/light_grey" />
+      android:textColor="@color/med_grey" />
 
   <TextView
       android:id="@+id/static_sub_round"
@@ -39,7 +37,7 @@
       android:layout_alignBottom="@id/spacer"
       
       android:textSize="24dp"
-      android:textColor="@color/light_grey" />
+      android:textColor="@color/med_grey" />
 
   <TextView
       android:id="@+id/row_sub_pick"
@@ -49,7 +47,7 @@
       android:layout_alignBottom="@id/spacer"
       
       android:textSize="24dp"
-      android:textColor="@color/light_grey" />
+      android:textColor="@color/med_grey" />
 
   
 <!--               -->
@@ -63,7 +61,7 @@
       android:layout_alignBaseline="@id/spacer"
       
       android:textSize="12dp"
-      android:textColor="@color/light_grey" />
+      android:textColor="@color/med_grey" />
 
   <TextView
       android:id="@+id/row_pick"
@@ -73,7 +71,7 @@
       android:layout_alignBaseline="@id/spacer"
       
       android:textSize="12dp"
-      android:textColor="@color/light_grey" />
+      android:textColor="@color/med_grey" />
 
   <TextView
       android:id="@+id/static_right_paren"
@@ -84,7 +82,7 @@
       android:layout_alignBaseline="@id/spacer"
       
       android:textSize="12dp"
-      android:textColor="@color/light_grey" />
+      android:textColor="@color/med_grey" />
 <!--               -->
 
   <TextView
@@ -95,6 +93,6 @@
       android:layout_alignBaseline="@id/spacer"
       
       android:textSize="24dp"
-      android:textColor="@color/light_grey" />
+      android:textColor="@color/med_grey" />
 
 </RelativeLayout>

@@ -164,6 +164,9 @@ public class DbAdapter {
 
 
   public Cursor fetchTeamPicks(int team) {
+    // KEY_TEAM is 1 based, so team needs to be incremented.
+    team ++;
+
     Cursor mCursor = mDb.query(
         true,
         DB_TABLE_PICKS,

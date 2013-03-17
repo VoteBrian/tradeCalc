@@ -72,7 +72,7 @@ public class PageFragmentA extends SherlockFragment {
     s.setOnItemSelectedListener(
         new OnItemSelectedListener() {
           public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            mTeam = position + 1;
+            mTeam = position;
             picksAdapter.resetSelections(PAGE_IND);
             updateTeam(mTeam);
             picksAdapter.notifyDataSetChanged();
@@ -115,6 +115,7 @@ public class PageFragmentA extends SherlockFragment {
 
   private void updateTeam(int team) {
     picksAdapter.updateTeam(PAGE_IND, team);
+    updateListener.onUpdatedTeamA(team);
   }
 
   private void updateSum(double sum) {
@@ -122,10 +123,11 @@ public class PageFragmentA extends SherlockFragment {
     mView.buildDrawingCache();
     mView.destroyDrawingCache();
     picksAdapter.refresh(PAGE_IND);
-    updateListener.onUpdatedA(sum);
+    updateListener.onUpdatedTotalA(sum);
   }
 
   public interface OnUpdateListener {
-    public void onUpdatedA(double sum);
+    public void onUpdatedTotalA(double sum);
+    public void onUpdatedTeamA(int team);
   }
 }

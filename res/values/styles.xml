@@ -6,6 +6,6 @@
   </style>
 
   <style name="picks_listView" parent="android:style/Widget.ListView">
-    
+
   </style>
 </resources>
